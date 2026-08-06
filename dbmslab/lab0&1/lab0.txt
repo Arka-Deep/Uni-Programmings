@@ -1,0 +1,7 @@
+SQL> create table student36(
+  2  NAME CHAR(9) NOT NULL,
+  3  ROLL INTEGER, PH INTEGER);
+
+Table created.
+
+SQL> spool off;

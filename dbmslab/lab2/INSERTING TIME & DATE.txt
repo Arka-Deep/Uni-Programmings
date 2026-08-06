@@ -1,0 +1,82 @@
+To insert a timestamp in an Oracle database, you can either use SQL functions to insert the current system time or use the TO_TIMESTAMP function to convert a string literal to a timestamp value.
+Inserting the Current Timestamp
+Oracle provides several built-in functions to automatically insert the current time, depending on your needs for precision and time zone information.
+SYSTIMESTAMP: Inserts the system date and time of the database server, including fractional seconds and the server's time zone.
+sql
+INSERT INTO your_table (timestamp_column) VALUES (SYSTIMESTAMP);
+CURRENT_TIMESTAMP: Inserts the current date and time in the session time zone. The returned value is of TIMESTAMP WITH TIME ZONE datatype.
+sql
+INSERT INTO your_table (timestamp_column) VALUES (CURRENT_TIMESTAMP);
+LOCALTIMESTAMP: Inserts the current date and time in the session time zone, but the returned value is of TIMESTAMP datatype (without time zone information).
+sql
+INSERT INTO your_table (timestamp_column) VALUES (LOCALTIMESTAMP);
+
+Inserting a Specific Timestamp from a String
+If you want to insert a specific, static timestamp value, you should use the TO_TIMESTAMP function or a TIMESTAMP literal to avoid implicit conversion errors and ensure the format is correct.
+Using TO_TIMESTAMP function: This allows you to explicitly define the format of your input string.
+sql
+INSERT INTO your_table (timestamp_column)
+VALUES (TO_TIMESTAMP('2024-12-25 14:30:00.123456', 'YYYY-MM-DD HH24:MI:SS.FF'));
+The FF in the format mask handles fractional seconds (up to 9 digits of precision, by default).
+Using a TIMESTAMP literal: Oracle supports TIMESTAMP literals which follow a specific format (YYYY-MM-DD HH:MI:SS.FF).
+sql
+INSERT INTO your_table (timestamp_column)
+VALUES (TIMESTAMP '2024-12-25 14:30:00.123');
+
+Best Practices
+Use TIMESTAMP datatypes: For data that requires time precision beyond seconds, use TIMESTAMP, TIMESTAMP WITH TIME ZONE, or TIMESTAMP WITH LOCAL TIME ZONE columns instead of the older DATE datatype, which only stores time to the second.
+Avoid implicit conversion: Always use explicit functions like TO_TIMESTAMP or TO_DATE when inserting from a string to prevent potential errors arising from different session NLS (National Language Support) settings.
+Use bind variables in applications: When inserting timestamps from an application (e.g., Java, Python), use prepared statements and bind variables with appropriate type mappings to improve performance and prevent SQL injection.
+Control display format in queries: The timestamp value is stored internally, not in a specific display format. To view the timestamp in a desired format, use the TO_CHAR function in your SELECT statement:
+sql
+SELECT TO_CHAR(timestamp_column, 'DD-MON-YYYY HH24:MI:SS.FF') AS formatted_timestamp FROM your_table;
+
+
+
+
+
+To insert a date into an Oracle database, you can use the TO_DATE function for string literals or use the SYSDATE function for the current date and time.
+Methods for Inserting Dates
+The method you choose depends on whether you are inserting a specific date value or the current date and time.
+1. Using the TO_DATE function for a specific date (Recommended for strings)
+The TO_DATE function converts a character string to a DATE value, allowing you to specify the exact format of the input string. This is the most reliable way to handle specific date values from an application or user input, as it avoids issues with session-specific default date formats (NLS_DATE_FORMAT).
+Syntax:
+sql
+INSERT INTO table_name (date_column)
+VALUES (TO_DATE('date_string', 'format_model'));
+Examples:
+Inserting a date with only the date portion:
+sql
+INSERT INTO students (first_name, last_name, date_of_birth)
+VALUES ('Adam', 'Jones', TO_DATE('12/01/2016', 'DD/MM/YYYY'));
+(Oracle DATE type always stores date and time components, even if the time defaults to midnight).
+Inserting a date and time:
+sql
+INSERT INTO events (event_name, event_time)
+VALUES ('Meeting', TO_DATE('10-OCT-2025 15:30:00', 'DD-MON-YYYY HH24:MI:SS'));
+(HH24 uses a 24-hour clock).
+2. Using an ANSI Date Literal
+For date-only values in a standard format, you can use the ANSI date literal DATE 'YYYY-MM-DD'. This format is NLS independent.
+Syntax:
+sql
+INSERT INTO table_name (date_column)
+VALUES (DATE 'YYYY-MM-DD');
+Example:
+sql
+INSERT INTO students (first_name, last_name, date_of_birth)
+VALUES ('Brad', 'Smith', DATE '2016-12-01');
+3. Using SYSDATE or CURRENT_DATE for the current date/time
+To insert the current date and time of the database server, use the SYSDATE function. No conversion function is needed as SYSDATE is already a date datatype.
+Syntax:
+sql
+INSERT INTO table_name (date_column)
+VALUES (SYSDATE);
+Example:
+sql
+INSERT INTO error_log (error_code, log_date)
+VALUES (101, SYSDATE);
+(Use TRUNC(SYSDATE) if you only want to store the current date with the time truncated to midnight).
+Best Practices
+Always specify the format model when converting a string to a date using TO_DATE to prevent errors if the database's default date format changes.
+Use bind variables/prepared statements when inserting dates from an application (e.g., Java, C#) to avoid SQL injection attacks and data type mismatch errors. The application's driver should handle the type conversion.
+Understand that a DATE column always stores a time component internally in Oracle. If you only see the date when you query the table, it is a display issue with your client application's settings, not how the data is stored.

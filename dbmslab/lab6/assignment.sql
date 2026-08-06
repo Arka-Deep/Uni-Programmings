@@ -1,0 +1,125 @@
+spool '/home/avo/lab6_spool_2405036.sql';
+
+-- Creating School Table
+CREATE TABLE lab6_SCHOOL (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR(100),
+    injected_date DATE DEFAULT CURRENT_DATE
+);
+
+-- Creating Employee Table
+CREATE TABLE lab6_EMPLOYEE (
+    ID INT PRIMARY KEY,
+    LAST_NAME VARCHAR(50),
+    FIRST_NAME VARCHAR(50),
+    MIDDLE_NAME VARCHAR(50),
+    FATHER_NAME VARCHAR(50),
+    MOTHER_NAME VARCHAR(50),
+    SEX CHAR(1),
+    HIRE_DATE DATE,
+    ADDRESS VARCHAR(255),
+    CITY VARCHAR(50),
+    STATE VARCHAR(50),
+    ZIP VARCHAR(10),
+    PHONE VARCHAR(15),
+    PAGER VARCHAR(15),
+    SUPERVISOR_ID INT,
+    injected_date DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (SUPERVISOR_ID) REFERENCES lab6_EMPLOYEE(ID)
+);
+
+-- Creating Employee Alignment Table
+CREATE TABLE lab6_EMPLOYEE_ALIGNMENT (
+    EMPLOYEE_ID INT,
+    SCHOOL_ID INT,
+    injected_date DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (EMPLOYEE_ID) REFERENCES lab6_EMPLOYEE(ID),
+    FOREIGN KEY (SCHOOL_ID) REFERENCES lab6_SCHOOL(ID)
+);
+
+-- Creating Job Table
+CREATE TABLE lab6_JOB (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR(100),
+    TITLE VARCHAR(100),
+    SALARY DECIMAL(10, 2),
+    BONUS DECIMAL(10, 2),
+    injected_date DATE DEFAULT CURRENT_DATE
+);
+
+-- Creating Employee Pay Table
+CREATE TABLE lab6_EMPLOYEE_PAY (
+    EMPLOYEE_ID INT,
+    JOB_ID INT,
+    injected_date DATE DEFAULT CURRENT_DATE,
+    FOREIGN KEY (EMPLOYEE_ID) REFERENCES lab6_EMPLOYEE(ID),
+    FOREIGN KEY (JOB_ID) REFERENCES lab6_JOB(ID)
+);
+
+
+
+-- Insert Schools
+INSERT INTO lab6_SCHOOL (ID, NAME) VALUES 
+(1, 'Computer Engineering'), (2, 'Electronic Engineering'), 
+(3, 'Mechanical Engineering'), (4, 'Civil Engineering');
+
+-- Insert Employees
+INSERT INTO lab6_EMPLOYEE (ID, FIRST_NAME, LAST_NAME, SEX, HIRE_DATE, CITY, SUPERVISOR_ID) VALUES 
+(101, 'Rajesh', 'Kumar', 'M', DATE'2015-01-10', 'Delhi', NULL),
+(102, 'Amit', 'Sharma', 'M', DATE'2018-05-20', 'Mumbai', 101),
+(103, 'Priya', 'Patel', 'F', DATE'2020-03-15', 'Bangalore', 101),
+(104, 'John', 'Smith', 'M', DATE'2021-06-01', 'Pune', 102),
+(105, 'Suresh', 'Raina', 'M', DATE'2025-01-15', 'Chennai', 102),
+(106, 'Anjali', 'Desai', 'F', DATE'2019-11-22', 'Ahmedabad', 103);
+
+-- Insert Alignment
+INSERT INTO lab6_EMPLOYEE_ALIGNMENT (EMPLOYEE_ID, SCHOOL_ID) VALUES 
+(101, 1), (102, 1), (103, 2), (104, 1), (105, 1), (106, 3), (101, 2);
+
+-- Insert Jobs
+INSERT INTO lab6_JOB (ID, NAME, TITLE, SALARY, BONUS) VALUES 
+(1, 'Dept A', 'Professor', 150000, 20000),
+(2, 'Dept B', 'Associate Professor', 90000, 10000),
+(3, 'Dept A', 'Professor', 160000, NULL),
+(4, 'Dept C', 'Assistant Professor', 70000, 5000);
+
+-- Insert Pay
+INSERT INTO lab6_EMPLOYEE_PAY (EMPLOYEE_ID, JOB_ID) VALUES 
+(101, 1), (102, 2), (103, 2), (104, 2), (105, 3), (106, 4);
+
+
+
+SELECT e.FIRST_NAME || ' ' || e.LAST_NAME AS FULL_NAME, s.NAME AS SCHOOL_NAME
+FROM lab6_EMPLOYEE e
+JOIN lab6_EMPLOYEE_ALIGNMENT ea ON e.ID = ea.EMPLOYEE_ID
+JOIN lab6_SCHOOL s ON ea.SCHOOL_ID = s.ID;
+
+
+SELECT e.FIRST_NAME || ' ' || e.LAST_NAME AS FULL_NAME, j.TITLE, j.SALARY
+FROM lab6_EMPLOYEE e
+JOIN lab6_EMPLOYEE_PAY ep ON e.ID = ep.EMPLOYEE_ID
+JOIN lab6_JOB j ON ep.JOB_ID = j.ID;
+
+
+SELECT e.FIRST_NAME || ' ' || e.LAST_NAME AS FULL_NAME, j.NAME, j.TITLE, (j.SALARY + j.BONUS) AS TOTAL_SALARY
+FROM lab6_EMPLOYEE e
+JOIN lab6_EMPLOYEE_PAY ep ON e.ID = ep.EMPLOYEE_ID
+JOIN lab6_JOB j ON ep.JOB_ID = j.ID
+WHERE j.BONUS IS NOT NULL;
+
+SELECT DISTINCT s.FIRST_NAME || ' ' || s.LAST_NAME AS SUPERVISOR_NAME
+FROM lab6_EMPLOYEE e
+JOIN lab6_EMPLOYEE s ON e.SUPERVISOR_ID = s.ID;
+
+SELECT s.ID, s.FIRST_NAME || ' ' || s.LAST_NAME AS SUPERVISOR_NAME, COUNT(e.ID) AS TOTAL_SUPERVISEES
+FROM lab6_EMPLOYEE s
+JOIN lab6_EMPLOYEE e ON s.ID = e.SUPERVISOR_ID
+GROUP BY s.ID, s.FIRST_NAME, s.LAST_NAME;
+
+spool off;
+
+--spool '/home/avo/test2_2405036.sql';
+--spool off;
+
+
+

@@ -1,0 +1,10 @@
+    PID TTY          TIME CMD
+   3204 tty2     00:00:00 gnome-session-i
+  14926 pts/1    00:00:00 zsh
+  14936 pts/1    00:00:00 zsh
+  14938 pts/1    00:00:00 zsh
+  14939 pts/1    00:00:00 gitstatusd
+  44565 pts/1    00:00:00 ps
+  44566 pts/1    00:00:00 cat
+line one 
+second line 

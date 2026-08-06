@@ -1,0 +1,7 @@
+sjdhnbbcyb
+kjd test line for testing vim j
+this is a sample sentence 
+
+write and quit indvisnsjj
+A gets us to the end of the line 
+undo => normal mode +u 

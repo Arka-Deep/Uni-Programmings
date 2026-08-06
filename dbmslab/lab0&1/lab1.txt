@@ -1,0 +1,159 @@
+SQL> CREATE TABLE Employee
+  2  (EMP_ID CHAR(9) NOT NULL,
+  3  EMP_NAME VARCHAR (40) NOT NULL,
+  4  DEPARTMENT VARCHAR(20) NOT NULL,
+  5  PHONE INTEGER NOT NULL);
+
+Table created.
+
+SQL> CREATE TABLE Student
+  2  (ROLL INTEGER NOT NULL,
+  3  NAME VARCHAR(40) NOT NULL,
+  4  STREAM VARCHAR(20) NOT NULL,
+  5  PHONE INTEGER NOT NULL);
+
+Table created.
+
+SQL> CREATE TABLE Product
+  2  (ID INTEGER NOT NULL,
+  3  NAME VARCHAR(20),
+  4  COST INTEGER NOT NULL);
+
+Table created.
+
+SQL> CREATE TABLE Customer
+  2  (CUS_ID INTEGER NOT NULL,
+  3  NAME VARCHAR(40) NOT NULL,
+  4  PHONE INTEGER NOT NULL,
+  5  ZIP INTEGER);
+
+Table created.
+
+SQL> CREATE TABLE Account
+  2  (ID INTEGER NOT NULL UNIQUE,
+  3  CREATED_ON DATE NOT NULL,
+  4  IS_ACTIVE BOOLEAN );
+IS_ACTIVE BOOLEAN )
+          *
+ERROR at line 4:
+ORA-00902: invalid datatype 
+
+
+SQL> CREATE TABLE Account
+  2    2  (ID INTEGER NOT NULL UNIQUE,
+  3    3  CREATED_ON DATE NOT NULL,
+  4  BIT(1));
+  2  (ID INTEGER NOT NULL UNIQUE,
+  *
+ERROR at line 2:
+ORA-00922: missing or invalid option 
+
+
+SQL> CREATE TABLE Account
+  2    2  (ID INTEGER NOT NULL UNIQUE,
+  3    3  CREATED_ON DATE NOT NULL,
+  4    4  IS_
+  5  
+SQL> DESCRIBE Account
+ERROR:
+ORA-04043: object Account does not exist 
+
+
+SQL> create table Account
+  2  (ID INTEGER NOT NULL UNIQUE,
+  3  CREATED_ON DATE NOT NULL,
+  4  IS_ACTIVE BIT(1));
+IS_ACTIVE BIT(1))
+             *
+ERROR at line 4:
+ORA-00907: missing right parenthesis 
+
+
+SQL> create table Account
+  2    2  (ID INTEGER NOT NULL UNIQUE,
+  3    3  CREATED_ON DATE NOT NULL,
+  4  CHAR(1) NOT NULL);
+  2  (ID INTEGER NOT NULL UNIQUE,
+  *
+ERROR at line 2:
+ORA-00922: missing or invalid option 
+
+
+SQL> CREATE TABLE Account
+  2  (ID INTEGER NOT NULL UNIQUE,
+  3  CREATED_ON DATE NOT NULL);
+
+Table created.
+
+SQL> CREATE TABLE Person
+  2  (NAME VARCHAR(40) NOT NULL,
+  3  ADDRESS VARCHAR(100) NOT NULL,
+  4  PHONE INTEGER );
+
+Table created.
+
+SQL> DESC Employee
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMP_ID                                    NOT NULL CHAR(9)
+ EMP_NAME                                  NOT NULL VARCHAR2(40)
+ DEPARTMENT                                NOT NULL VARCHAR2(20)
+ PHONE                                     NOT NULL NUMBER(38)
+
+SQL> DESC Student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLL                                      NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(40)
+ STREAM                                    NOT NULL VARCHAR2(20)
+ PHONE                                     NOT NULL NUMBER(38)
+
+SQL> DESC Product
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ COST                                      NOT NULL NUMBER(38)
+
+SQL> DESC Customer
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUS_ID                                    NOT NULL NUMBER(38)
+ NAME                                      NOT NULL VARCHAR2(40)
+ PHONE                                     NOT NULL NUMBER(38)
+ ZIP                                                NUMBER(38)
+
+SQL> DESC Account
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(38)
+ CREATED_ON                                NOT NULL DATE
+
+SQL> DESC Person
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                      NOT NULL VARCHAR2(40)
+ ADDRESS                                   NOT NULL VARCHAR2(100)
+ PHONE                                              NUMBER(38)
+
+SQL> INSERT INTO Employee VALUES
+  2  ('1','ARKA','MECH',9987652435),
+  3  ('2','ABHI','TECH',7890976544),
+  4  ('3','LIGMA','MECH',344566666),
+  5  ('4','DEEZ','HR',67888554344),
+  6  ('5','ARNAV','HR',9899876543);
+('1','ARKA','MECH',9987652435),
+                              *
+ERROR at line 2:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> INSERT INTO Employee VALUES ('1','ARKA','MECH',9987652435);
+
+1 row created.
+
+SQL> sudo docker exec -it oracle bash -c "source /home/oracle/.bashrc; sqlplus /nolog"
+SP2-0734: unknown command beginning "sudo docke..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> spool /tmp/lab/sample.txt

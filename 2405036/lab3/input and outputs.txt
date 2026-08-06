@@ -1,0 +1,41 @@
+---diff
+45 7 
+38
+----prod
+3 5
+15
+----div
+94 7
+13.428572
+----area circle
+5
+78.500000
+----peri rect
+5 4 
+18.00000
+----area triag
+5 7
+17.50000
+----far to cel 
+56
+the temperature in celcius is 13.3333clecius
+------swap
+4
+5
+5
+4
+-----area triag_2
+4 5 3
+6.00000
+-----swap_2
+6 7 
+7 6
+----kilometer
+5678
+5km 678m
+--------sal
+50000
+77500
+
+
+

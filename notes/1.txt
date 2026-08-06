@@ -1,0 +1,21 @@
+pwd ---- print working directory
+ls  -----list contents of folder
+date --- print current date  and time
+mkdir <name> ----make directory
+cd <path/name> ---change dirctory
+	cd ../   move to parent directory
+cp <source_dir> <target>  -------copy
+nano <file_name> 
+	nano----(ctrl+s = save , ctrl+x = exit)
+rm <file_name>  ----removes a file
+rmdir <directory_name> ---removes empty directory
+
+
+#include ----imports header file
+
+
+#start new program from new page
+1st ass--- basic linux commands
+2nd assignment------ folder structure,hello world,kiit,WAP to add 2 nos (by user input and by scanf)
+
+
