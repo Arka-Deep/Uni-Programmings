@@ -2,7 +2,7 @@ import java.util.*;
 public class quickSorting {
     static void quick(int[] arr,int l,int h){
         if(l<h){
-            int q=partition(arr, l, h);;
+            int q=partition(arr, l, h);
             quick(arr, l, q-1);
             quick(arr, q+1, h);
         }
