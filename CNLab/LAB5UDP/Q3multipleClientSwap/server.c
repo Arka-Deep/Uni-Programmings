@@ -38,7 +38,7 @@ int main(){
     }
     //2nd cli
     struct sockaddr_in cli2;
-    int sz2=sizeof(cli);
+    int sz2=sizeof(cli2);
     int client_fd2 = accept(fd, (struct sockaddr*)&cli2, &sz2);
     if (client_fd2 == -1) {
         printf("Accept failed\n");
