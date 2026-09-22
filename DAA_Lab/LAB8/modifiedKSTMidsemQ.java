@@ -25,9 +25,9 @@ public class modifiedKSTMidsemQ {
     }
 
     static void sortEdges(Edge[] edges, int n) {
-        for (int i = 0; i < n - 1; i++) {
+        for (int i = 1; i < n - 1; i++) {
 
-            for (int j = 0; j < n - i - 1; j++) {
+            for (int j = 1; j < n - i - 1; j++) {
 
                 if (edges[j].wt > edges[j + 1].wt) {
                     Edge temp = edges[j];
@@ -39,8 +39,8 @@ public class modifiedKSTMidsemQ {
     }
 
     public static void kruskalMST(Edge[] edges, int vert, int nEdges) {
-        
-        //sortEdges(edges, nEdges);
+        //put 1st edge and then sort everything else
+        sortEdges(edges, nEdges);
 
         
         int[] parent = new int[vert];
