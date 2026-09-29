@@ -17,9 +17,9 @@ int main()
     listen(fd, 5);
     struct sockaddr_in temp;
     socklen_t len = sizeof(temp);
-    while (1)
-    {
+    
         int newfd1 = accept(fd, (struct sockaddr *)&temp, &len);
+        printf("Client connected \n");
         int a, b;
         char op;
         float result;
@@ -35,7 +35,7 @@ int main()
         else if (op == '/')
             result = (float)a / b;
         send(newfd1, &result, sizeof(result), 0);
-        close(newfd1);
-    }
+        
+    
     return 0;
 }

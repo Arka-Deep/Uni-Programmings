@@ -33,6 +33,6 @@ int main()
     send(fd, &op, sizeof(op), 0);
     recv(fd, &result, sizeof(result), 0);
     printf("Result: %.2f\n", result);
-    close(fd);
+    
     return 0;
 }
